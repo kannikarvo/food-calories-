@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f8f7f2" />
+  <title>Plateful — Photo calorie tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#"><span class="brand-mark">P</span><span>plateful</span></a>
+      <nav>
+        <button class="nav-item active" data-view="today"><span data-icon="home"></span>Today</button>
+        <button class="nav-item" data-view="history"><span data-icon="calendar"></span>History</button>
+        <button class="nav-item" data-view="insights"><span data-icon="chart"></span>Insights</button>
+      </nav>
+      <div class="sidebar-card">
+        <div class="tiny-plate">🥬</div>
+        <p>Small choices,<br><strong>lasting change.</strong></p>
+      </div>
+      <div class="profile"><div class="avatar">MJ</div><div><strong>Maya Johnson</strong><small>1,850 kcal goal</small></div><button>•••</button></div>
+    </aside>
+
+    <main>
+      <header class="mobile-header"><a class="brand" href="#"><span class="brand-mark">P</span><span>plateful</span></a><button class="avatar">MJ</button></header>
+      <section id="todayView" class="view active">
+        <div class="topline">
+          <div><p class="eyebrow" id="dateLabel"></p><h1>Good morning, Maya <span>👋</span></h1><p class="subhead">One plate at a time. You’ve got this.</p></div>
+          <button class="secondary-btn" id="goalBtn"><span data-icon="target"></span> Edit daily goal</button>
+        </div>
+
+        <section class="summary-card">
+          <div class="ring-wrap"><div class="ring" id="calorieRing"><div><strong id="remainingCount">1,012</strong><span>kcal left</span></div></div></div>
+          <div class="summary-copy"><span class="status-pill">ON TRACK</span><h2 id="consumedCount">838 <small>kcal consumed</small></h2><p id="goalCopy">of your 1,850 kcal daily goal</p><div class="goal-bar"><span id="goalProgress"></span></div></div>
+          <div class="macro-grid">
+            <div><span class="macro-icon protein">P</span><p><strong id="proteinCount">48g</strong><small>Protein</small></p></div>
+            <div><span class="macro-icon carbs">C</span><p><strong id="carbCount">92g</strong><small>Carbs</small></p></div>
+            <div><span class="macro-icon fat">F</span><p><strong id="fatCount">31g</strong><small>Fats</small></p></div>
+          </div>
+        </section>
+
+        <div class="section-heading"><div><h2>Today’s meals</h2><p>Tap a meal to see the breakdown</p></div><button class="primary-btn" id="addMealBtn"><span>＋</span> Add meal</button></div>
+        <div id="mealList" class="meal-list"></div>
+        <div id="emptyState" class="empty-state hidden"><div>🍽️</div><h3>Your plate is waiting</h3><p>Snap your first meal to start tracking today.</p><button class="primary-btn add-trigger">＋ Add your first meal</button></div>
+      </section>
+
+      <section id="historyView" class="view"><div class="topline"><div><p class="eyebrow">YOUR JOURNEY</p><h1>Meal history</h1><p class="subhead">A clear look at what’s been on your plate.</p></div></div><div id="historyList" class="history-list"></div></section>
+      <section id="insightsView" class="view"><div class="topline"><div><p class="eyebrow">WEEKLY RHYTHM</p><h1>Your insights</h1><p class="subhead">Patterns, not perfection.</p></div></div><div class="insight-grid"><article class="insight-card wide"><p class="card-label">CALORIES · LAST 7 DAYS</p><div id="weekChart" class="week-chart"></div></article><article class="insight-card"><p class="card-label">WEEKLY AVERAGE</p><strong class="big-stat" id="avgCalories">1,742</strong><span>kcal / day</span><p class="positive">↓ 4% from last week</p></article><article class="insight-card"><p class="card-label">CONSISTENCY</p><strong class="big-stat">6/7</strong><span>days logged</span><p class="positive">Your best streak yet</p></article></div></section>
+    </main>
+  </div>
+
+  <nav class="bottom-nav"><button class="active" data-view="today"><span data-icon="home"></span>Today</button><button data-view="history"><span data-icon="calendar"></span>History</button><button class="camera-tab add-trigger"><span>＋</span></button><button data-view="insights"><span data-icon="chart"></span>Insights</button><button><span data-icon="user"></span>Profile</button></nav>
+
+  <div class="modal-backdrop" id="mealModal" aria-hidden="true">
+    <section class="modal camera-modal">
+      <button class="close-btn" data-close>×</button>
+      <div id="captureStep" class="modal-step active">
+        <p class="eyebrow">ADD A MEAL</p><h2>Show us what’s on your plate</h2><p class="modal-sub">Take a clear, overhead photo. You’ll review everything before it’s saved.</p>
+        <label class="camera-zone" for="photoInput"><input id="photoInput" type="file" accept="image/*" capture="environment"><span class="camera-icon" data-icon="camera"></span><strong>Take a photo</strong><small>or choose from your library</small></label>
+        <div class="photo-tips"><span>☀️ Good lighting</span><span>◉ Entire plate</span><span>↕ Overhead angle</span></div>
+      </div>
+      <div id="analyzeStep" class="modal-step"><div class="photo-preview"><img id="previewImage" alt="Your meal"><div class="scan-line"></div></div><div class="analyzing"><span class="spinner"></span><h2>Reading your plate…</h2><p>Identifying foods and estimating portions</p></div></div>
+      <div id="reviewStep" class="modal-step"><div class="review-head"><div><p class="eyebrow">AI ESTIMATE · REVIEW</p><h2>Here’s what we found</h2></div><span class="confidence">High confidence</span></div><div class="review-layout"><img id="reviewImage" alt="Meal preview"><div class="review-content"><div class="meal-type-row"><label>Meal</label><select id="mealType"><option>Breakfast</option><option selected>Lunch</option><option>Dinner</option><option>Snack</option></select></div><div id="detectedFoods" class="detected-foods"></div><button class="text-btn" id="addFoodBtn">＋ Add another item</button><div class="estimate-total"><span>Estimated total</span><strong id="estimateTotal">0 kcal</strong></div><p class="disclaimer">Photo estimates can vary. Adjust any item or portion before saving.</p><button class="primary-btn full" id="saveMealBtn">Save meal</button></div></div></div>
+    </section>
+  </div>
+
+  <div class="toast" id="toast"><span>✓</span><div><strong>Meal saved</strong><small>Your daily total is up to date.</small></div></div>
+  <script src="app.js"></script>
+</body>
+</html>
